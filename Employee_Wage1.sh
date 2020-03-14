@@ -3,7 +3,7 @@
 # CONSTANTS FOR THE PROGRAM
 isPartTime=1
 isFullTime=2
-maxHrsInMonth=10
+maxHrsInMonth=4
 empRatePerHr=20
 numWorkingDays=20
 
@@ -35,7 +35,8 @@ do
 	((totalWorkingDays++))
 	workHours="$( getWorkingHours $((RANDOM%3)) )"
 	totalWorkHours=$(($totalWorkHours+$workHours))
-	empDailyWage[$totalWorkingDays]="$( calcDailyWage $workHours )"
+	empDailyWage["$totalWorkingDays"]="$( calcDailyWage $workHours )"
 done
 	totalSalary="$( calcDailyWage $totalWorkHours )"
 	echo "Daily Wage" ${empDailyWage[@]}
+	echo "All Keys" ${!empDailyWage[@]}
