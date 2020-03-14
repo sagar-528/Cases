@@ -3,7 +3,7 @@
 # CONSTANTS FOR THE PROGRAM
 isPartTime=1
 isFullTime=2
-maxHrsInMonth=10
+maxHrsInMonth=4
 empRatePerHr=20
 numWorkingDays=20
 
@@ -11,20 +11,23 @@ numWorkingDays=20
 totalEmpHr=0
 totalWorkingDays=0
 
-while [[ $totalEmpHrs -lt $maxHrsInMonth && 
+function getWorkingHours() {
+	case $1 in
+		$isFullTime)
+			workHours=8 ;;
+		$isPartTime)
+			workHours=4 ;;
+		*)
+			workHours=0 ;;
+	esac
+	echo $workHours
+}
+
+while [[ $totalWorkHours -lt $maxHrsInMonth && 
 			$totalWorkingDays -lt $numWorkingDays ]]
 do
 	((totalWorkingDays++))
-	empCheck=$((RANDOM%3))
-		case $empCheck in
-			$isFullTime)
-				empHrs=8 ;;
-			$isPartTime)
-				empHrs=4 ;;
-			*)
-				empHrs=0 ;;
-		esac
-	totalEmpHrs=$(($totalEmpHrs+$empHrs))
-
+	workHours="$( getWorkingHours $((RANDOM%3)) )"
+	totalWorkHours=$(($totalWorkHours+$workHours))
 done
-	totalSalary=$(($totalEmpHrs*$empRatePerHr))
+	totalSalary=$(($totalWorkHours*$empRatePerHr))
